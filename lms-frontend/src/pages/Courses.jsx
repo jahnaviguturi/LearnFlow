@@ -62,10 +62,11 @@ const Courses = () => {
             className="form-input"
           >
             <option value="">All Categories</option>
-            <option value="Development">Development</option>
-            <option value="Design">Design</option>
-            <option value="Business">Business</option>
-            <option value="Marketing">Marketing</option>
+            <option value="Programming">Programming</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Database">Database</option>
+            <option value="Computer Science">Computer Science</option>
           </select>
         </div>
 

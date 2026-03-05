@@ -1,0 +1,36 @@
+# Dependencies
+**/node_modules/
+
+# Environment variables
+**/.env
+
+# Database
+*.sqlite
+*.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/

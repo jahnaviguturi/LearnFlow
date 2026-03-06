@@ -36,7 +36,7 @@ const AIAssistantWidget = () => {
 
     try {
       const response = await fetch(
-        'https://api-inference.huggingface.co/models/jahnaviguturi1/Qwen-Qwen3.5-397B-A17B',
+        'https://router.huggingface.co/hf-inference/models/jahnaviguturi1/Qwen-Qwen3.5-397B-A17B',
         {
           method: 'POST',
           headers: {

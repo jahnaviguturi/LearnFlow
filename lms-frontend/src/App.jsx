@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
+import AIAssistantWidget from './components/AIAssistantWidget'
 import Home from './pages/Home'
 import Courses from './pages/Courses'
 import CourseDetail from './pages/CourseDetail'
@@ -34,6 +35,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
           </Routes>
         </main>
+        <AIAssistantWidget />
       </div>
     </AuthProvider>
   )

@@ -35,14 +35,13 @@ const AIAssistantWidget = () => {
     setIsLoading(true)
 
     try {
-      // Use direct Gradio HTTP API
-      const response = await fetch('https://jahnaviguturi1-ai.hf.space/api/predict', {
+      // Use Gradio API v2 format
+      const response = await fetch('https://jahnaviguturi1-ai.hf.space/gradio_api/call/respond', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          fn_index: 0,
           data: [
             userMessage,
             "You are an AI tutor helping students learn programming, web development, and databases.",

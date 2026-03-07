@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import AIAssistantWidget from './components/AIAssistantWidget'
 import Home from './pages/Home'
 import Courses from './pages/Courses'
@@ -36,6 +37,7 @@ function App() {
           </Routes>
         </main>
         <AIAssistantWidget />
+        <Footer />
       </div>
     </AuthProvider>
   )

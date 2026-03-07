@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../services/api'
-import { Clock, BookOpen, User } from 'lucide-react'
+import { Clock, BookOpen, User, Search } from 'lucide-react'
 
 const Courses = () => {
   const [courses, setCourses] = useState([])
@@ -9,10 +9,18 @@ const Courses = () => {
   const [error, setError] = useState(null)
   const [category, setCategory] = useState('')
   const [search, setSearch] = useState('')
+  const [searchInput, setSearchInput] = useState('')
 
   useEffect(() => {
     fetchCourses()
   }, [category, search])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearch(searchInput)
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [searchInput])
 
   const fetchCourses = async () => {
     try {
@@ -49,13 +57,16 @@ const Courses = () => {
 
       <div className="container">
         <div className="filters">
-          <input
-            type="text"
-            placeholder="Search courses..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="form-input search-input"
-          />
+          <div className="search-wrapper">
+            <Search className="search-icon" size={20} />
+            <input
+              type="text"
+              placeholder="Search courses..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="form-input search-input"
+            />
+          </div>
           <select 
             value={category} 
             onChange={(e) => setCategory(e.target.value)}

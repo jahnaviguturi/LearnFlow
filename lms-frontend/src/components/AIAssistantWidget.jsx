@@ -35,15 +35,24 @@ const AIAssistantWidget = () => {
     setIsLoading(true)
 
     try {
+      // Call Gradio Space API
       const response = await fetch(
-        'https://router.huggingface.co/hf-inference/models/jahnaviguturi1/Qwen-Qwen3.5-397B-A17B',
+        'https://jahnaviguturi1-ai.hf.space/api/predict',
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ inputs: userMessage })
+          body: JSON.stringify({
+            fn_index: 0,
+            data: [
+              userMessage,
+              "You are an AI tutor helping students learn programming, web development, and databases.",
+              512,
+              0.7,
+              0.9
+            ]
+          })
         }
       )
 
@@ -51,16 +60,14 @@ const AIAssistantWidget = () => {
         throw new Error('API request failed')
       }
 
-      const data = await response.json()
+      const result = await response.json()
       
-      // Extract generated text from Hugging Face response
+      // Extract response from Gradio API format
       let aiResponse = 'Sorry, I couldn\'t process that response.'
-      if (Array.isArray(data) && data.length > 0) {
-        aiResponse = data[0].generated_text || data[0].text || aiResponse
-      } else if (data.generated_text) {
-        aiResponse = data.generated_text
-      } else if (data.text) {
-        aiResponse = data.text
+      if (result.data && Array.isArray(result.data) && result.data.length > 0) {
+        aiResponse = result.data[0]
+      } else if (typeof result.data === 'string') {
+        aiResponse = result.data
       }
 
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }])

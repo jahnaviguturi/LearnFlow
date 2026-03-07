@@ -8,26 +8,16 @@ const Courses = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [category, setCategory] = useState('')
-  const [search, setSearch] = useState('')
-  const [searchInput, setSearchInput] = useState('')
 
   useEffect(() => {
     fetchCourses()
-  }, [category, search])
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearch(searchInput)
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [searchInput])
+  }, [category])
 
   const fetchCourses = async () => {
     try {
       setLoading(true)
       const params = new URLSearchParams()
       if (category) params.append('category', category)
-      if (search) params.append('search', search)
       
       const response = await api.get(`/courses?${params}`)
       setCourses(response.data.courses)
@@ -57,13 +47,6 @@ const Courses = () => {
 
       <div className="container">
         <div className="filters">
-          <input
-            type="text"
-            placeholder="Search courses..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="form-input search-input"
-          />
           <select 
             value={category} 
             onChange={(e) => setCategory(e.target.value)}

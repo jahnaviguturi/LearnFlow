@@ -19,46 +19,57 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="footer-modern">
+    <footer className="footer">
       <div className="container">
-        <div className="footer-content-modern">
-          {/* Logo */}
-          <div className="footer-brand-modern">
-            <Link to="/" className="footer-logo-modern">
-              <BookOpen size={32} />
+        <div className="footer-content">
+          {/* Logo and Description */}
+          <div className="footer-brand">
+            <Link to="/" className="footer-logo">
+              <BookOpen size={28} />
               <span>LearnFlow</span>
             </Link>
+            <p className="footer-description">
+              Empowering learners worldwide with quality education and interactive courses.
+            </p>
           </div>
 
           {/* Navigation Links */}
-          <div className="footer-nav-modern">
-            {navLinks.map((link) => (
-              <Link key={link.label} to={link.to} className="footer-link-modern">
-                {link.label}
-              </Link>
-            ))}
+          <div className="footer-nav">
+            <h4>Quick Links</h4>
+            <ul>
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to} className="footer-link">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Social Links */}
-          <div className="footer-social-modern">
-            {socialLinks.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                className="social-icon-modern"
-                aria-label={social.label}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <social.icon size={20} />
-              </a>
-            ))}
+          <div className="footer-social">
+            <h4>Connect With Us</h4>
+            <div className="social-icons">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="social-icon"
+                  aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <social.icon size={20} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Copyright */}
-        <div className="footer-bottom-modern">
-          <p className="copyright-modern">
+        <div className="footer-bottom">
+          <p className="copyright">
             © {currentYear} LearnFlow Platform. All rights reserved.
           </p>
         </div>

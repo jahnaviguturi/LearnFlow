@@ -161,6 +161,11 @@ input, textarea, select {
   z-index: 100;
 }
 
+/* Ensure navbar has relative positioning for dropdown */
+nav.navbar {
+  position: relative;
+}
+
 .navbar-content {
   display: flex;
   align-items: center;

@@ -2,6 +2,7 @@
   --primary: #6366f1;
   --primary-dark: #4f46e5;
   --secondary: #8b5cf6;
+  --accent: #3b82f6;
   --success: #22c55e;
   --warning: #f59e0b;
   --error: #ef4444;
@@ -12,10 +13,14 @@
   --text-secondary: #64748b;
   --text-muted: #94a3b8;
   --border: #e2e8f0;
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --radius: 8px;
   --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
 }
 
 * {
@@ -154,8 +159,10 @@ input, textarea, select {
 }
 
 .navbar {
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   position: sticky;
   top: 0;
   z-index: 100;

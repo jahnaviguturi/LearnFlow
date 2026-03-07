@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { MessageCircle, X, Send, Bot, User } from 'lucide-react'
+import { Client } from '@gradio/client'
 import './AIAssistantWidget.css'
 
 const AIAssistantWidget = () => {
@@ -11,6 +12,7 @@ const AIAssistantWidget = () => {
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+  const clientRef = useRef(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -26,6 +28,18 @@ const AIAssistantWidget = () => {
     }
   }, [isOpen])
 
+  useEffect(() => {
+    // Initialize Gradio client
+    const initClient = async () => {
+      try {
+        clientRef.current = await Client.connect('jahnaviguturi1/AI')
+      } catch (error) {
+        console.error('Failed to connect to AI:', error)
+      }
+    }
+    initClient()
+  }, [])
+
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return
 
@@ -35,41 +49,19 @@ const AIAssistantWidget = () => {
     setIsLoading(true)
 
     try {
-      // Call Gradio Space API
-      const response = await fetch(
-        'https://jahnaviguturi1-ai.hf.space/api/predict',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            fn_index: 0,
-            data: [
-              userMessage,
-              "You are an AI tutor helping students learn programming, web development, and databases.",
-              512,
-              0.7,
-              0.9
-            ]
-          })
-        }
-      )
-
-      if (!response.ok) {
-        throw new Error('API request failed')
+      if (!clientRef.current) {
+        clientRef.current = await Client.connect('jahnaviguturi1/AI')
       }
 
-      const result = await response.json()
-      
-      // Extract response from Gradio API format
-      let aiResponse = 'Sorry, I couldn\'t process that response.'
-      if (result.data && Array.isArray(result.data) && result.data.length > 0) {
-        aiResponse = result.data[0]
-      } else if (typeof result.data === 'string') {
-        aiResponse = result.data
-      }
+      const result = await clientRef.current.predict('/respond', {
+        message: userMessage,
+        system_message: 'You are an AI tutor helping students learn programming, web development, and databases.',
+        max_tokens: 512,
+        temperature: 0.7,
+        top_p: 0.9
+      })
 
+      const aiResponse = result.data || 'Sorry, I couldn\'t process that response.'
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }])
     } catch (error) {
       console.error('AI Error:', error)

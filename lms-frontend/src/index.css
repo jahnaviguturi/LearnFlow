@@ -370,25 +370,10 @@ nav.navbar {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.search-wrapper {
+.search-input {
   flex: 1;
   max-width: 400px;
-  position: relative;
-}
-
-.search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.search-input {
-  width: 100%;
-  padding: 12px 16px 12px 44px;
+  padding: 12px 16px;
   background: white;
   border: 2px solid #e2e8f0;
   border-radius: 12px;

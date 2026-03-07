@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../services/api'
-import { Clock, BookOpen, User, Search } from 'lucide-react'
+import { Clock, BookOpen, User } from 'lucide-react'
 
 const Courses = () => {
   const [courses, setCourses] = useState([])
@@ -57,16 +57,13 @@ const Courses = () => {
 
       <div className="container">
         <div className="filters">
-          <div className="search-wrapper">
-            <Search className="search-icon" size={20} />
-            <input
-              type="text"
-              placeholder="Search courses..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className="form-input search-input"
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="Search courses..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className="form-input search-input"
+          />
           <select 
             value={category} 
             onChange={(e) => setCategory(e.target.value)}

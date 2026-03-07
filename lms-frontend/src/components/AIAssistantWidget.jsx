@@ -61,7 +61,20 @@ const AIAssistantWidget = () => {
         top_p: 0.9
       })
 
-      const aiResponse = result.data || 'Sorry, I couldn\'t process that response.'
+      console.log('AI Response:', result)
+
+      // Handle different response formats
+      let aiResponse = 'Sorry, I couldn\'t process that response.'
+      if (result && result.data) {
+        if (typeof result.data === 'string') {
+          aiResponse = result.data
+        } else if (Array.isArray(result.data) && result.data.length > 0) {
+          aiResponse = result.data[0]
+        } else if (typeof result.data === 'object') {
+          aiResponse = JSON.stringify(result.data)
+        }
+      }
+
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }])
     } catch (error) {
       console.error('AI Error:', error)

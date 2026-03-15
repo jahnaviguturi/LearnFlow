@@ -35,8 +35,8 @@ const AIAssistantWidget = () => {
     setIsLoading(true)
 
     try {
-      // Use Hugging Face Inference API for Qwen model
-      const response = await fetch('https://api-inference.huggingface.co/models/jahnaviguturi1/Qwen-Qwen2.5-7B-Instruct', {
+      // Use Hugging Face Inference API with a public model
+      const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
@@ -45,7 +45,7 @@ const AIAssistantWidget = () => {
         body: JSON.stringify({
           inputs: userMessage,
           parameters: {
-            max_new_tokens: 512,
+            max_new_tokens: 256,
             temperature: 0.7,
             top_p: 0.9,
             return_full_text: false

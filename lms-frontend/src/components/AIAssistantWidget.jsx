@@ -35,20 +35,21 @@ const AIAssistantWidget = () => {
     setIsLoading(true)
 
     try {
-      // Use Gradio API v2 format
-      const response = await fetch('https://jahnaviguturi1-ai.hf.space/gradio_api/call/respond', {
+      // Use Hugging Face Inference API for Qwen model
+      const response = await fetch('https://router.huggingface.co/hf-inference/models/jahnaviguturi1/Qwen-Qwen2.5-7B-Instruct', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          data: [
-            userMessage,
-            "You are an AI tutor helping students learn programming, web development, and databases.",
-            512,
-            0.7,
-            0.9
-          ]
+          inputs: userMessage,
+          parameters: {
+            max_new_tokens: 512,
+            temperature: 0.7,
+            top_p: 0.9,
+            return_full_text: false
+          }
         })
       })
 

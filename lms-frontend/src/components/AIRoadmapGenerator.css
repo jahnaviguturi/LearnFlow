@@ -1,0 +1,219 @@
+.ai-roadmap-generator {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.roadmap-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.roadmap-header .icon {
+  color: #f59e0b;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+
+.roadmap-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+}
+
+.roadmap-header p {
+  color: #6b7280;
+  margin: 0;
+}
+
+.roadmap-input {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.roadmap-input .form-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.roadmap-input .form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.roadmap-input .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.roadmap-input .btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+}
+
+.roadmap-input .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.roadmap-result {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 32px;
+}
+
+.roadmap-stats {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.roadmap-stats .stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  color: #374151;
+}
+
+.roadmap-stats .stat svg {
+  color: #6366f1;
+}
+
+.roadmap-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.roadmap-step {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border-left: 4px solid #6366f1;
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.step-content p {
+  margin: 0 0 12px 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.step-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.skill-tag {
+  padding: 4px 10px;
+  background: #e0e7ff;
+  color: #6366f1;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.recommended-courses {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+}
+
+.recommended-courses strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #374151;
+  font-size: 13px;
+}
+
+.recommended-courses ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.recommended-courses li {
+  color: #6366f1;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.step-duration {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .ai-roadmap-generator {
+    padding: 20px;
+  }
+  
+  .roadmap-step {
+    flex-direction: column;
+  }
+  
+  .step-number {
+    align-self: flex-start;
+  }
+}

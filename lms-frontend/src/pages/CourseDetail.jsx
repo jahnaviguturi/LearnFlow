@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import api from '../services/api'
 import { useAuth } from '../contexts/AuthContext'
-import { Clock, BookOpen, User, CheckCircle, PlayCircle } from 'lucide-react'
+import { Clock, BookOpen, User, CheckCircle, PlayCircle, Star } from 'lucide-react'
+import CourseReviews from '../components/CourseReviews'
 
 const CourseDetail = () => {
   const { id } = useParams()
@@ -169,10 +170,21 @@ const CourseDetail = () => {
                     <Clock size={16} />
                     <span>{formatDuration(course.total_duration)}</span>
                   </div>
+                  {course.average_rating > 0 && (
+                    <div className="stat">
+                      <Star size={16} className="text-yellow-500" />
+                      <span>{course.average_rating} ({course.review_count} reviews)</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="reviews-section">
+          <CourseReviews courseId={id} isEnrolled={isEnrolled} />
         </div>
       </div>
     </div>

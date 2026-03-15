@@ -9,6 +9,8 @@ const courseRoutes = require('./routes/course.routes');
 const enrollmentRoutes = require('./routes/enrollment.routes');
 const progressRoutes = require('./routes/progress.routes');
 const certificateRoutes = require('./routes/certificate.routes');
+const aiRoutes = require('./routes/ai.routes');
+const reviewRoutes = require('./routes/review.routes');
 
 const app = express();
 
@@ -24,6 +26,8 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/certificates', certificateRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });

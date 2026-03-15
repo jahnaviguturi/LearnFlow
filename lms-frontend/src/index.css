@@ -820,6 +820,15 @@ nav.navbar {
   gap: 32px;
 }
 
+.reviews-section {
+  margin-top: 48px;
+  max-width: 800px;
+}
+
+.text-yellow-500 {
+  color: #fbbf24;
+}
+
 .course-main {
   display: flex;
   flex-direction: column;

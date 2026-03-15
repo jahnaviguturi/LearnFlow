@@ -35,21 +35,21 @@ const AIAssistantWidget = () => {
     setIsLoading(true)
 
     try {
-      // Use Hugging Face Serverless Inference API
-      const response = await fetch('https://router.huggingface.co/hf-inference/models/mistralai/Mistral-7B-Instruct-v0.2', {
+      // Use OpenAI API for reliable AI responses
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
+          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          inputs: `<s>[INST] ${userMessage} [/INST]`,
-          parameters: {
-            max_new_tokens: 256,
-            temperature: 0.7,
-            top_p: 0.9,
-            return_full_text: false
-          }
+          model: 'gpt-3.5-turbo',
+          messages: [
+            { role: 'system', content: 'You are an AI tutor helping students learn programming, web development, and databases.' },
+            { role: 'user', content: userMessage }
+          ],
+          max_tokens: 256,
+          temperature: 0.7
         })
       })
 
@@ -60,12 +60,10 @@ const AIAssistantWidget = () => {
       const result = await response.json()
       console.log('AI Response:', result)
 
-      // Extract response from Gradio API format
+      // Extract response from OpenAI API format
       let aiResponse = 'Sorry, I couldn\'t process that response.'
-      if (result && Array.isArray(result.data) && result.data.length > 0) {
-        aiResponse = result.data[0]
-      } else if (result && typeof result.data === 'string') {
-        aiResponse = result.data
+      if (result.choices && result.choices.length > 0 && result.choices[0].message) {
+        aiResponse = result.choices[0].message.content
       }
 
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }])

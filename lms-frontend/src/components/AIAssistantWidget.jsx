@@ -35,15 +35,15 @@ const AIAssistantWidget = () => {
     setIsLoading(true)
 
     try {
-      // Use Hugging Face Inference API with a public model
-      const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium', {
+      // Use Hugging Face Serverless Inference API
+      const response = await fetch('https://router.huggingface.co/hf-inference/models/mistralai/Mistral-7B-Instruct-v0.2', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${import.meta.env.VITE_HF_API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          inputs: userMessage,
+          inputs: `<s>[INST] ${userMessage} [/INST]`,
           parameters: {
             max_new_tokens: 256,
             temperature: 0.7,

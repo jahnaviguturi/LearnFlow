@@ -36,7 +36,7 @@ const AIAssistantWidget = () => {
 
     try {
       // Use Hugging Face Inference API for Qwen model
-      const response = await fetch('https://router.huggingface.co/hf-inference/models/jahnaviguturi1/Qwen-Qwen2.5-7B-Instruct', {
+      const response = await fetch('https://api-inference.huggingface.co/models/jahnaviguturi1/Qwen-Qwen2.5-7B-Instruct', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${import.meta.env.VITE_HF_API_KEY}`,

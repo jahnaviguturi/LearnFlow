@@ -2,6 +2,27 @@ import { useState, useRef, useEffect } from 'react'
 import { MessageCircle, X, Send, Bot, User } from 'lucide-react'
 import './AIAssistantWidget.css'
 
+// Format message with basic markdown-like styling
+const formatMessage = (text) => {
+  if (!text) return ''
+  
+  return text
+    // Escape HTML
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    // Bold
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    // Code blocks
+    .replace(/```([\s\S]+?)```/g, '<pre><code>$1</code></pre>')
+    // Inline code
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    // Line breaks
+    .replace(/\n/g, '<br />')
+}
+
 const AIAssistantWidget = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([
@@ -116,7 +137,9 @@ const AIAssistantWidget = () => {
                   {message.role === 'user' ? <User size={14} /> : <Bot size={14} />}
                 </div>
                 <div className="message-bubble">
-                  <p>{message.content}</p>
+                  <div className="message-text" dangerouslySetInnerHTML={{ 
+                    __html: formatMessage(message.content) 
+                  }} />
                 </div>
               </div>
             ))}

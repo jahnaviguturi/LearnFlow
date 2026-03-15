@@ -167,8 +167,10 @@
   border-radius: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
   color: #1f2937;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .message-user .message-bubble {
@@ -181,8 +183,49 @@
   border-bottom-left-radius: 4px;
 }
 
-.message-bubble p {
+.message-text {
   margin: 0;
+}
+
+.message-text strong {
+  font-weight: 600;
+}
+
+.message-text em {
+  font-style: italic;
+}
+
+.message-text code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+}
+
+.message-user .message-text code {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.message-text pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.message-text pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.message-text br {
+  display: block;
+  content: "";
+  margin-top: 8px;
 }
 
 /* Typing Indicator */

@@ -35,21 +35,22 @@ const AIAssistantWidget = () => {
     setIsLoading(true)
 
     try {
-      // Use OpenAI API for reliable AI responses
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      // Use Google Gemini API (free tier available)
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
-          messages: [
-            { role: 'system', content: 'You are an AI tutor helping students learn programming, web development, and databases.' },
-            { role: 'user', content: userMessage }
-          ],
-          max_tokens: 256,
-          temperature: 0.7
+          contents: [{
+            parts: [{
+              text: `You are an AI tutor helping students learn programming, web development, and databases.\n\nUser: ${userMessage}`
+            }]
+          }],
+          generationConfig: {
+            maxOutputTokens: 256,
+            temperature: 0.7
+          }
         })
       })
 
@@ -60,10 +61,10 @@ const AIAssistantWidget = () => {
       const result = await response.json()
       console.log('AI Response:', result)
 
-      // Extract response from OpenAI API format
+      // Extract response from Gemini API format
       let aiResponse = 'Sorry, I couldn\'t process that response.'
-      if (result.choices && result.choices.length > 0 && result.choices[0].message) {
-        aiResponse = result.choices[0].message.content
+      if (result.candidates && result.candidates.length > 0 && result.candidates[0].content) {
+        aiResponse = result.candidates[0].content.parts[0].text
       }
 
       setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }])

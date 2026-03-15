@@ -71,6 +71,33 @@ router.post('/complete', authenticate, async (req, res) => {
       ? Math.round((stats.completed_lessons / stats.total_lessons) * 100) 
       : 0;
 
+    // Check if course is completed (100%)
+    let certificate = null;
+    if (progressPercent === 100 && stats.total_lessons > 0) {
+      // Check if certificate already exists
+      const [existingCert] = await pool.execute(
+        'SELECT * FROM certificates WHERE user_id = ? AND course_id = ?',
+        [userId, courseId]
+      );
+      
+      if (existingCert.length === 0) {
+        // Generate new certificate
+        const certificateId = `LF-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+        await pool.execute(
+          'INSERT INTO certificates (user_id, course_id, certificate_id) VALUES (?, ?, ?)',
+          [userId, courseId, certificateId]
+        );
+        
+        const [newCert] = await pool.execute(
+          'SELECT * FROM certificates WHERE certificate_id = ?',
+          [certificateId]
+        );
+        certificate = newCert[0];
+      } else {
+        certificate = existingCert[0];
+      }
+    }
+
     res.json({
       message: 'Progress updated',
       progress: {
@@ -78,7 +105,9 @@ router.post('/complete', authenticate, async (req, res) => {
         completed: true,
         ...stats,
         progress_percent: progressPercent
-      }
+      },
+      courseCompleted: progressPercent === 100 && stats.total_lessons > 0,
+      certificate
     });
   } catch (error) {
     res.status(500).json({ message: 'Database error', error: error.message });

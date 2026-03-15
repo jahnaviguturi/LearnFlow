@@ -2,15 +2,20 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import YouTube from 'react-youtube'
 import api from '../services/api'
-import { CheckCircle, Circle, ChevronLeft, ChevronRight, PlayCircle } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
+import { CheckCircle, Circle, ChevronLeft, ChevronRight, PlayCircle, Award } from 'lucide-react'
+import CourseBadge from '../components/CourseBadge'
 
 const Learning = () => {
   const { courseId } = useParams()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [course, setCourse] = useState(null)
   const [currentLesson, setCurrentLesson] = useState(null)
   const [progress, setProgress] = useState({})
   const [loading, setLoading] = useState(true)
+  const [showCertificate, setShowCertificate] = useState(false)
+  const [certificate, setCertificate] = useState(null)
   const playerRef = useRef(null)
 
   useEffect(() => {
@@ -50,16 +55,22 @@ const Learning = () => {
     if (!currentLesson || progress[currentLesson.id]) return
 
     try {
-      await api.post('/progress/complete', {
+      const response = await api.post('/progress/complete', {
         courseId,
         lessonId: currentLesson.id
       })
 
       setProgress(prev => ({ ...prev, [currentLesson.id]: true }))
       
-      const nextLesson = getNextLesson()
-      if (nextLesson) {
-        setCurrentLesson(nextLesson)
+      // Check if course is completed
+      if (response.data.courseCompleted) {
+        setCertificate(response.data.certificate)
+        setShowCertificate(true)
+      } else {
+        const nextLesson = getNextLesson()
+        if (nextLesson) {
+          setCurrentLesson(nextLesson)
+        }
       }
     } catch (err) {
       console.error('Failed to update progress')
@@ -112,6 +123,7 @@ const Learning = () => {
   const completedLessons = Object.values(progress).filter(Boolean).length
   const totalLessons = course?.sections?.reduce((acc, s) => acc + (s.lessons?.length || 0), 0) || 0
   const progressPercent = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0
+  const isCourseCompleted = progressPercent === 100
 
   if (loading) return <div className="loading">Loading...</div>
 
@@ -199,6 +211,17 @@ const Learning = () => {
 
         <div className="lessons-sidebar">
           <h3>Course Content</h3>
+          
+          {isCourseCompleted && (
+            <div className="course-completed-banner" onClick={() => setShowCertificate(true)}>
+              <Award size={24} />
+              <div>
+                <strong>Course Completed!</strong>
+                <span>Click to view certificate</span>
+              </div>
+            </div>
+          )}
+          
           {course?.sections?.map((section, sIdx) => (
             <div key={section.id} className="sidebar-section">
               <div className="sidebar-section-header">
@@ -225,6 +248,15 @@ const Learning = () => {
           ))}
         </div>
       </div>
+      
+      {showCertificate && course && (
+        <CourseBadge
+          course={course}
+          user={user}
+          completionDate={certificate?.completion_date || new Date().toISOString()}
+          onClose={() => setShowCertificate(false)}
+        />
+      )}
     </div>
   )
 }

@@ -1,0 +1,241 @@
+.badge-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+}
+
+.badge-content {
+  background: white;
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 900px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.certificate {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2027 50%, #1e3a5f 100%);
+  color: white;
+  padding: 60px;
+  border-radius: 16px;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  border: 4px solid #fbbf24;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.certificate::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.certificate-header {
+  margin-bottom: 40px;
+}
+
+.certificate-header .logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fbbf24;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.certificate-header h1 {
+  font-size: 42px;
+  margin: 0;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.certificate-body {
+  margin: 48px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.presented-to, .has-completed {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-style: italic;
+}
+
+.student-name {
+  font-size: 48px;
+  margin: 20px 0;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #fbbf24;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.course-name {
+  font-size: 32px;
+  margin: 24px 0 12px 0;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.instructor {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  margin: 0;
+}
+
+.certificate-footer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.certificate-footer > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.certificate-footer span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.certificate-footer strong {
+  font-size: 14px;
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.certificate-seal {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  color: #fbbf24;
+  opacity: 0.15;
+}
+
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  font-size: 120px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.badge-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.badge-actions .btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.badge-actions .btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+}
+
+.badge-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+}
+
+.badge-actions .btn-outline {
+  background: white;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.badge-actions .btn-outline:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+  background: #f5f3ff;
+}
+
+@media (max-width: 768px) {
+  .certificate {
+    padding: 40px 24px;
+  }
+  
+  .certificate-header h1 {
+    font-size: 28px;
+  }
+  
+  .student-name {
+    font-size: 32px;
+  }
+  
+  .course-name {
+    font-size: 24px;
+  }
+  
+  .certificate-footer {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .certificate-seal {
+    display: none;
+  }
+  
+  .badge-actions {
+    flex-direction: column;
+  }
+}

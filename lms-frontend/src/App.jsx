@@ -8,6 +8,7 @@ import Courses from './pages/Courses'
 import CourseDetail from './pages/CourseDetail'
 import Learning from './pages/Learning'
 import MyCourses from './pages/MyCourses'
+import CreateCourse from './pages/CreateCourse'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -30,6 +31,11 @@ function App() {
             <Route path="/my-courses" element={
               <ProtectedRoute>
                 <MyCourses />
+              </ProtectedRoute>
+            } />
+            <Route path="/create-course" element={
+              <ProtectedRoute>
+                <CreateCourse />
               </ProtectedRoute>
             } />
             <Route path="/login" element={<Login />} />

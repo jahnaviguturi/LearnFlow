@@ -93,6 +93,19 @@ const initDatabase = async () => {
       )
     `);
 
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS certificates (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        course_id INT NOT NULL,
+        certificate_id VARCHAR(100) UNIQUE NOT NULL,
+        completion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+        UNIQUE KEY unique_certificate (user_id, course_id)
+      )
+    `);
+
     connection.release();
     console.log('Database initialized successfully');
   } catch (error) {

@@ -114,6 +114,9 @@ const Navbar = () => {
           {user ? (
             <>
               <Link to="/my-courses" className="nav-link">My Learning</Link>
+              {(user.role === 'instructor' || user.role === 'admin') && (
+                <Link to="/create-course" className="nav-link">Create Course</Link>
+              )}
               <div className="user-menu">
                 <span className="user-name">{user.name}</span>
                 <button onClick={handleLogout} className="btn btn-sm btn-outline">

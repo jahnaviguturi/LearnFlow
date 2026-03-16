@@ -61,6 +61,12 @@ router.post('/complete', authenticate, async (req, res) => {
       ON DUPLICATE KEY UPDATE completed = 1, last_watched = CURRENT_TIMESTAMP
     `, [userId, lessonId, courseId]);
 
+    // Log activity
+    await pool.execute(`
+      INSERT INTO user_activity (user_id, activity_type, course_id, lesson_id, activity_date)
+      VALUES (?, 'lesson_complete', ?, ?, CURDATE())
+    `, [userId, courseId, lessonId]);
+
     const [[stats]] = await pool.execute(`
       SELECT 
         (SELECT COUNT(*) FROM lessons WHERE section_id IN (SELECT id FROM sections WHERE course_id = ?)) as total_lessons,
@@ -93,8 +99,52 @@ router.post('/complete', authenticate, async (req, res) => {
           [certificateId]
         );
         certificate = newCert[0];
+
+        // Log course completion activity
+        await pool.execute(`
+          INSERT INTO user_activity (user_id, activity_type, course_id, activity_date)
+          VALUES (?, 'course_complete', ?, CURDATE())
+        `, [userId, courseId]);
+
+        // Award badges
+        await awardBadges(userId, courseId);
       } else {
         certificate = existingCert[0];
+      }
+    }
+
+    // Helper function to award badges
+    async function awardBadges(userId, courseId) {
+      // First course badge
+      const [certs] = await pool.execute(
+        'SELECT COUNT(*) as count FROM certificates WHERE user_id = ?',
+        [userId]
+      );
+      
+      if (certs[0].count === 1) {
+        await pool.execute(`
+          INSERT INTO user_badges (user_id, badge_name, badge_icon, badge_color)
+          VALUES (?, 'First Course Completed', 'Award', '#22c55e')
+          ON DUPLICATE KEY UPDATE earned_date = earned_date
+        `, [userId]);
+      }
+
+      // 5 courses badge
+      if (certs[0].count === 5) {
+        await pool.execute(`
+          INSERT INTO user_badges (user_id, badge_name, badge_icon, badge_color)
+          VALUES (?, 'Course Master', 'Trophy', '#f59e0b')
+          ON DUPLICATE KEY UPDATE earned_date = earned_date
+        `, [userId]);
+      }
+
+      // 10 courses badge
+      if (certs[0].count === 10) {
+        await pool.execute(`
+          INSERT INTO user_badges (user_id, badge_name, badge_icon, badge_color)
+          VALUES (?, 'Learning Legend', 'Star', '#8b5cf6')
+          ON DUPLICATE KEY UPDATE earned_date = earned_date
+        `, [userId]);
       }
     }
 

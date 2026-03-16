@@ -114,6 +114,7 @@ const Navbar = () => {
           {user ? (
             <>
               <Link to="/my-courses" className="nav-link">My Learning</Link>
+              <Link to="/profile" className="nav-link">Profile</Link>
               {(user.role === 'instructor' || user.role === 'admin') && (
                 <Link to="/create-course" className="nav-link">Create Course</Link>
               )}

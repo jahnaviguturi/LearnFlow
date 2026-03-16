@@ -9,6 +9,7 @@ import CourseDetail from './pages/CourseDetail'
 import Learning from './pages/Learning'
 import MyCourses from './pages/MyCourses'
 import CreateCourse from './pages/CreateCourse'
+import Profile from './pages/Profile'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -36,6 +37,11 @@ function App() {
             <Route path="/create-course" element={
               <ProtectedRoute>
                 <CreateCourse />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
             <Route path="/login" element={<Login />} />

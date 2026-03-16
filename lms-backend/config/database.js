@@ -134,6 +134,46 @@ const initDatabase = async () => {
       )
     `);
 
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS user_badges (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        badge_name VARCHAR(100) NOT NULL,
+        badge_icon VARCHAR(50) NOT NULL,
+        badge_color VARCHAR(20) DEFAULT '#6366f1',
+        earned_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        UNIQUE KEY unique_badge (user_id, badge_name)
+      )
+    `);
+
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS user_activity (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        activity_type ENUM('lesson_complete', 'course_complete', 'enroll', 'streak') NOT NULL,
+        course_id INT,
+        lesson_id INT,
+        activity_date DATE NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+        FOREIGN KEY (lesson_id) REFERENCES lessons(id) ON DELETE CASCADE
+      )
+    `);
+
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS user_profiles (
+        user_id INT PRIMARY KEY,
+        bio TEXT,
+        banner_url VARCHAR(500),
+        theme_color VARCHAR(20) DEFAULT '#6366f1',
+        social_links JSON,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      )
+    `);
+
     connection.release();
     console.log('Database initialized successfully');
   } catch (error) {
